@@ -1,4 +1,4 @@
-export default interface Players {
+export default interface Player {
   id: number;
   name: string;
   image: string;
