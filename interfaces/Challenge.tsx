@@ -1,12 +1,12 @@
-import Card from "./Card";
-import Players from "./Players";
+import EcoGesture from "./EcoGesture";
+import Player from "./Player";
 
 export default interface Challenge {
   id: number;
   name: string;
   image: string;
-  playersList: Players[];
-  startDate: Date;
-  endDate: Date;
-  ecoGestures: Card[];
+  playersList: Player[];
+  startDate: string;
+  endDate: string;
+  ecoGesturesList: EcoGesture[];
 }

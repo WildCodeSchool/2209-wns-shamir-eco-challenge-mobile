@@ -9,28 +9,48 @@ import HomeMember from "./pages/HomeMember";
 import Profile from "./pages/Profile";
 import Register from "./components/Register";
 import Challenges from "./pages/Challenges/Challenges";
-import ChallengesDetails from "./pages/Challenges/ChallengesDetails";
+import ChallengeDetails from "./pages/Challenges/ChallengeDetails";
 import CreateChallenge from "./pages/Challenges/CreateChallenge";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import TabNavigator from "./TabNavigator";
 
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
-const Tab = createBottomTabNavigator();
+export type RootStackParamList = {
+  //Undefined when no params needed
+  TabNavigator: undefined;
+  Guests: undefined;
+  Accueil: undefined;
+  Register: undefined;
+  HomeMember: undefined;
+  Challenges: undefined;
+  ChallengeDetails: { id: number };
+  CreateChallenge: undefined;
+  Profile: undefined;
+  Friends: undefined;
+  Contact: undefined;
+};
 
 export default function App() {
   return (
-      <NavigationContainer>
-        <Tab.Navigator>
-          <Tab.Screen name="Visiteurs" component={Guests}
-          />
-          <Tab.Screen name="Accueil" component={Home} />
-         {/* <Tab.Screen name="Auth" component={Register} />*/}
-          <Tab.Screen name="Accueil Membre" component={HomeMember} />
-          {/*<Tab.Screen name="Challenges" component={Challenges} />*/}
-          <Tab.Screen name="Détails challenges" component={ChallengesDetails} />
-          <Tab.Screen name="Créer un challenge" component={CreateChallenge} />
-          <Tab.Screen name="Profil" component={Profile} />
-          <Tab.Screen name="Amis" component={Friends} />
-          <Tab.Screen name="contact" component={Contact} />
-        </Tab.Navigator>
-      </NavigationContainer>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="TabNavigator"
+          component={TabNavigator}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name="Visiteurs" component={Guests} />
+        <Stack.Screen name="Accueil" component={Home} />
+        <Stack.Screen name="Auth" component={Register} />
+        <Stack.Screen name="Accueil Membre" component={HomeMember} />
+        <Stack.Screen name="Challenges" component={Challenges} />
+        <Stack.Screen name="ChallengeDetails" component={ChallengeDetails} />
+        <Stack.Screen name="Créer un challenge" component={CreateChallenge} />
+        <Stack.Screen name="Profil" component={Profile} />
+        <Stack.Screen name="Amis" component={Friends} />
+        <Stack.Screen name="contact" component={Contact} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
