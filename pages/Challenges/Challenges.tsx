@@ -1,42 +1,30 @@
-import * as React from "react";
-import ExpandingCards from "../../components/ExpandingCards";
+import React from "react";
+import { Text, View, StyleSheet, ScrollView } from "react-native";
+import ChallengeList from "../../components/ChallengeList";
+import { challengesData } from "../../data/dummyData";
 
-import Challenge from "../../interfaces/Challenge";
+export default function Challenges() {
+  // TODO: Filtrer par user pour n'afficher que les challenges de l'user (Need: Auth & Data Back)
 
-interface Props {
-  data: Array<Challenge>;
-}
+  // TODO: Filtrer les challenges par date et leurs appliquer un status
+  type ChallengeStatus = "UPCOMING" | "STARTED" | "ENDED";
 
-export default function Challenges({ data }: Props) {
-  const [activeId, setActiveId] = React.useState<number>(1);
-  const [showEcoGesture, setShowEcoGesture] = React.useState<Boolean>(false);
-
-  const handleEcoGesture = (event: any) => {
-    event.preventDefault();
-    setShowEcoGesture((current) => !current);
-  };
-  const onClick = (id: number) => setActiveId(id);
   return (
-    <div>
-      <p>Challenges Page</p>
-      {data.map((challenge) => (
-        <div
-          key={challenge.id}
-          className={`panel ${activeId === challenge.id ? "active" : ""}`}
-          onClick={() => onClick(challenge.id)}
-          style={{ backgroundImage: `url(${challenge.image})` }}
-        >
-          <h3>{challenge.name}</h3>
-          <button onClick={handleEcoGesture}>
-            Voir les éco gestes à réaliser
-          </button>
-          {showEcoGesture === true ? (
-            <ExpandingCards data={challenge.ecoGestures} />
-          ) : (
-            ""
-          )}
-        </div>
-      ))}
-    </div>
+    <ScrollView style={{ marginTop: 20 }}>
+      <Text style={styles.title}>Challenges en cours 📆</Text>
+      <ChallengeList data={challengesData} />
+      <Text style={styles.title}>Challenges à venir 📣</Text>
+      <ChallengeList data={challengesData} />
+      <Text style={styles.title}>Challenges terminés 🏁</Text>
+      <ChallengeList data={challengesData} />
+    </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  title: {
+    textAlign: "center",
+    padding: 10,
+    fontSize: 20,
+  },
+});
