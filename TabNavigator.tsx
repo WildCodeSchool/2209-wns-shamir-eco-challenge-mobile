@@ -21,6 +21,7 @@ export default function TabNavigator() {
       <Tab.Screen name="Accueil" component={Home} />
       <Tab.Screen name="Créer un challenge" component={CreateChallenge} />
       <Tab.Screen name="Challenges" component={Challenges} />
+      <Tab.Screen name="Accueil Membre" component={HomeMember} />
     </Tab.Navigator>
   );
 }

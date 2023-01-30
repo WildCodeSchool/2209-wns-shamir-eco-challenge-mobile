@@ -13,6 +13,13 @@ import ChallengeDetails from "./pages/Challenges/ChallengeDetails";
 import CreateChallenge from "./pages/Challenges/CreateChallenge";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import TabNavigator from "./TabNavigator";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import Constants from "expo-constants";
+
+const { manifest } = Constants;
+const cache = new InMemoryCache();
+const uri = `http://${manifest?.debuggerHost?.split(':').shift()}:5000`;
+
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -31,8 +38,15 @@ export type RootStackParamList = {
   Contact: undefined;
 };
 
+// Initialize Apollo Client
+const client = new ApolloClient({
+  cache,
+  uri,
+});
+
 export default function App() {
   return (
+    <ApolloProvider client={client}>
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
@@ -52,5 +66,6 @@ export default function App() {
         <Stack.Screen name="contact" component={Contact} />
       </Stack.Navigator>
     </NavigationContainer>
+    </ApolloProvider>
   );
 }
