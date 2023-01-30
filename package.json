@@ -8,14 +8,20 @@
     "ios": "expo start --ios",
     "web": "expo start --web"
   },
+  "overrides": {
+    "react-devtools-core": "~4.25.0"
+  },
   "dependencies": {
+    "@apollo/client": "^3.7.5",
     "@react-native-picker/picker": "^2.4.8",
     "@react-navigation/bottom-tabs": "^6.5.3",
     "@react-navigation/native": "^6.1.2",
     "@react-navigation/native-stack": "^6.9.8",
     "@react-navigation/stack": "^6.3.11",
+    "axios": "^1.2.6",
     "expo": "~47.0.12",
     "expo-status-bar": "~1.4.2",
+    "graphql": "^15.8.0",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-native": "0.70.5",
