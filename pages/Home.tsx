@@ -8,7 +8,7 @@ export default function Home() {
     <ScrollView>
       <View style={styles.container}>
       <Image
-        style={styles.tinyLogo}
+        style={styles.logo}
         source={require('../assets/logo.png')}
       />
 
@@ -19,13 +19,13 @@ export default function Home() {
         quotidien !
       </Text>
 
-      <Text style={styles.login}><Ionicons name={"leaf-outline"} /> Identifiant :</Text>
+      <Text style={styles.login}><Ionicons name={"leaf-outline"} color="#357452ff"/> Identifiant :</Text>
       <TextInput
         style={styles.input}
         placeholder="ton email"
       />
       
-      <Text style={styles.login}><Ionicons name={"leaf-outline"} /> Mot de passe :</Text>
+      <Text style={styles.login}><Ionicons name={"leaf-outline"} color="#357452ff"/> Mot de passe :</Text>
       <TextInput
         style={styles.input}
         placeholder="ton mot de passe"
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingBottom: 50,
   },
-  tinyLogo: {
+  logo: {
     width: 300,
     height: 300,
   },
