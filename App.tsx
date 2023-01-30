@@ -12,9 +12,44 @@ import Challenges from "./pages/Challenges/Challenges";
 import ChallengeDetails from "./pages/Challenges/ChallengeDetails";
 import CreateChallenge from "./pages/Challenges/CreateChallenge";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import {
+  Item,
+  HeaderButton,
+  HeaderButtons,
+} from "react-navigation-header-buttons";
 import TabNavigator from "./TabNavigator";
+import {Ionicons} from "@expo/vector-icons";
+import { createAppContainer } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
+
+import HomeScreen from "./pages/HomeScreen";
+import SettingScreen from "./pages/SettingScreen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
+
+const AppNavigator = createStackNavigator(
+    {
+      Home: HomeScreen,
+      Setting: SettingScreen,
+    },
+    {
+      defaultNavigationOptions: {
+        headerStyle: {
+          backgroundColor: "#357453",
+        },
+        headerTitleStyle: {
+          fontWeight: "bold",
+          color: "#FFF",
+        },
+        headerTintColor: "#FFF",
+      },
+    }/*,
+    {
+      initialRouteName: "Home",
+    }*/
+);
+
+const Navigator = createAppContainer(AppNavigator);
 
 export type RootStackParamList = {
   //Undefined when no params needed
@@ -30,18 +65,31 @@ export type RootStackParamList = {
   Friends: undefined;
   Contact: undefined;
 };
+const HeaderButtonComponent = (props: any) => (
+    <HeaderButton
+        IconComponent={Ionicons}
+        iconSize={23}
+        color="#FFF"
+        {...props}
+    />
+);
 
 export default function App() {
   return (
+      <>
+        <Navigator>
+
+        </Navigator>
     <NavigationContainer>
+
       <Stack.Navigator>
+
         <Stack.Screen
           name="TabNavigator"
           component={TabNavigator}
           options={{ headerShown: false }}
         />
         <Stack.Screen name="Visiteurs" component={Guests} />
-        <Stack.Screen name="Accueil" component={Home} />
         <Stack.Screen name="Auth" component={Register} />
         <Stack.Screen name="Accueil Membre" component={HomeMember} />
         <Stack.Screen name="Challenges" component={Challenges} />
@@ -52,5 +100,8 @@ export default function App() {
         <Stack.Screen name="contact" component={Contact} />
       </Stack.Navigator>
     </NavigationContainer>
+
+      </>
   );
 }
+

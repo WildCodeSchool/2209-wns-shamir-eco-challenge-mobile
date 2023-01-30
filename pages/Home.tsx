@@ -1,5 +1,7 @@
 import * as React from "react";
 import {Text, View} from "react-native";
+import {HeaderButton, HeaderButtons, Item} from "react-navigation-header-buttons";
+import {Ionicons} from "@expo/vector-icons";
 
 export default function Home() {
   return (
@@ -16,3 +18,4 @@ export default function Home() {
     </View>
   );
 }
+
