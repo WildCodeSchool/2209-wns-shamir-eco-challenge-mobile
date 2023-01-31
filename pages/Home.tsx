@@ -9,10 +9,6 @@ export default function Home() {
   return (
     <ScrollView>
       <View style={styles.container}>
-      <Image
-        style={styles.logo}
-        {/* <Image style={styles.logo} source={require("../assets/logo.png")} /> */}
-      />
 
 
       <Text style={styles.intro}>
