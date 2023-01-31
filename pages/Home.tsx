@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { Button, Text, View, StyleSheet, TextInput, Image, ScrollView, Alert, Modal, Pressable } from "react-native";
+import { Text, View, StyleSheet, TextInput, Image, ScrollView, Alert, Modal, Pressable } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function Home() {
