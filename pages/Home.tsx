@@ -46,6 +46,11 @@ export default function Home() {
             color="#357452ff"
           />
         </View>
+
+        <Image
+          style={styles.ecofriend1}
+          source={require('../assets/ecofriend2.png')}
+        />
       </View>
     </ScrollView>
   );
@@ -56,7 +61,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     flex: 1,
     alignItems: "center",
-    paddingBottom: 50,
+    paddingBottom: 20,
   },
   logo: {
     width: 300,
@@ -80,7 +85,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     padding: 20,
-    marginTop: 20,
+    marginTop: 30,
     marginBottom: 20,
   },
   loginText: {
@@ -112,4 +117,8 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 20,
   },
+  ecofriend1: {
+    width: 100,
+    height: 100,
+  }
 });
