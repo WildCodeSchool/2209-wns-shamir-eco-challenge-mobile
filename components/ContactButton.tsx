@@ -22,7 +22,8 @@ const ContactButton = () => {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: "blue",
+    marginTop:25,
+    backgroundColor: "#357452ff",
     padding: 10,
     borderRadius: 5,
     width:200,
