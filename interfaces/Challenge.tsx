@@ -8,5 +8,6 @@ export default interface Challenge {
   playersList: Player[];
   startDate: string;
   endDate: string;
+  status: string;
   ecoGesturesList: EcoGesture[];
 }
