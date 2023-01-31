@@ -63,7 +63,7 @@ export default function App() {
         <Stack.Screen name="Créer un challenge" component={CreateChallenge} />
         <Stack.Screen name="Profil" component={Profile} />
         <Stack.Screen name="Amis" component={Friends} />
-        <Stack.Screen name="contact" component={Contact} />
+        <Stack.Screen name="Contact" component={Contact} />
       </Stack.Navigator>
     </NavigationContainer>
     </ApolloProvider>

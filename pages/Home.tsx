@@ -1,6 +1,8 @@
 import * as React from "react";
 import {Button, Text, View, StyleSheet, TextInput, Image, ScrollView } from "react-native";
+import ContactButton from "../components/ContactButton";
 import Ionicons from "@expo/vector-icons/Ionicons";
+
 
 export default function Home() {
   
@@ -9,8 +11,9 @@ export default function Home() {
       <View style={styles.container}>
       <Image
         style={styles.logo}
-        source={require('../assets/logo.png')}
+        {/* <Image style={styles.logo} source={require("../assets/logo.png")} /> */}
       />
+
 
       <Text style={styles.intro}>
         Envie de lancer un challenge à vos amis ? "Eco-Challenges" vous permet de
@@ -42,9 +45,11 @@ export default function Home() {
         title="S'ENREGISTRER"
         color="#357452ff"
       />
-      </View>
+      <ContactButton />
+      </View> 
     </ScrollView>
-  );
+
+      );
 }
 
 const styles = StyleSheet.create({
