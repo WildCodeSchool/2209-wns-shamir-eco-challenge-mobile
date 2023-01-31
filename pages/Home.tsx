@@ -1,9 +1,9 @@
-import * as React from "react";
-import {Button, Text, View, StyleSheet, TextInput, Image, ScrollView } from "react-native";
+import React, {useState} from "react";
+import { Button, Text, View, StyleSheet, TextInput, Image, ScrollView, Alert, Modal, Pressable } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function Home() {
-  
+  const [modalVisible, setModalVisible] = useState(false);
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -19,7 +19,7 @@ export default function Home() {
           quotidien !
         </Text>
 
-        <View style={styles.backgroundLogin}>
+        <View style={styles.loginBox}>
           <Text style={styles.loginText}><Ionicons name={"leaf-outline"} color="#357452ff" size={20}/> Identifiant :</Text>
           <TextInput
             style={styles.input}
@@ -32,19 +32,46 @@ export default function Home() {
             placeholder="ton mot de passe"
           />
         
-          <Button
-            title="SE CONNECTER"
-            color="#357452ff"
-          />
+        <Pressable style={[styles.button, styles.buttonClose]}>
+            <Text style={styles.textStyle}>SE CONNECTER</Text>
+          </Pressable>
         </View>
 
-        <View style={styles.backgroundRegister}>
+        <View style={styles.registerBox}>
           <Text style={styles.registerText}>Nouveau challenger ?</Text>
         
-          <Button 
-            title="S'ENREGISTRER"
-            color="#357452ff"
-          />
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              Alert.alert('Modal has been closed.');
+              setModalVisible(!modalVisible);
+            }}>
+              <View style={styles.modalView}>
+                <Text style={styles.loginText}><Ionicons name={"leaf-outline"} color="#357452ff" size={20}/> Identifiant :</Text>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="ton email"
+                  />
+
+                  <Text style={styles.loginText}><Ionicons name={"leaf-outline"} color="#357452ff" size={20}/> Mot de passe :</Text>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="ton mot de passe"
+                  />
+                <Pressable
+                  style={[styles.button, styles.buttonClose]}
+                  onPress={() => setModalVisible(!modalVisible)}>
+                  <Text style={styles.textStyle}>S'ENREGISTRER</Text>
+                </Pressable>
+              </View>
+          </Modal>
+          <Pressable
+            style={[styles.button, styles.buttonOpen]}
+            onPress={() => setModalVisible(true)}>
+            <Text style={styles.textStyle}>CREER UN COMPTE</Text>
+          </Pressable>
         </View>
 
         <Image
@@ -67,19 +94,12 @@ const styles = StyleSheet.create({
     width: 300,
     height: 300,
   },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-    fontFamily: "montserrat",
-    marginBottom: 5,
-  },
   intro: {
     fontSize: 16,
     fontFamily: "open-sans",
-    textAlign: "center",
-    marginTop: 20,    
+    textAlign: "center",    
   },
- backgroundLogin: {
+  loginBox: {
     backgroundColor: "rgba(53, 116, 82, 0.05)",
     width: 350,
     borderRadius: 10,
@@ -92,7 +112,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "open-sans",
   },
-  backgroundRegister: {
+  registerBox: {
     backgroundColor: "rgba(53, 116, 82, 0.05)",
     width: 350,
     borderRadius: 10,
@@ -114,11 +134,45 @@ const styles = StyleSheet.create({
     borderTopWidth: 0,
     borderBottomWidth: 2,
     borderBottomColor: "#357452ff",
-    padding: 10,
     marginBottom: 20,
   },
   ecofriend1: {
     width: 100,
     height: 100,
-  }
+  },
+  modalView: {
+    height: 500,
+    margin: 50,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 10,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: '#357452ff',
+  },
+  buttonClose: {
+    backgroundColor: '#357452ff',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    textAlign: 'center',
+  },
 });
