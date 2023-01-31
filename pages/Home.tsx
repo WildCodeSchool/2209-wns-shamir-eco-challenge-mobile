@@ -1,10 +1,10 @@
 import * as React from "react";
-import {Text, View, Button} from "react-native";
+import {Text, View, Button, StyleSheet} from "react-native";
 import ContactButton from "../components/ContactButton";
 
 export default function Home() {
   return (
-    <View>
+    <View style={styles.container}>
 
       <Text>Home Page !</Text>
       <Text>Bienvenue sur "Eco-Challenges" !</Text>
@@ -18,3 +18,11 @@ export default function Home() {
     </View>
   );
 }
+const styles = StyleSheet.create({
+
+  container: {
+    flex: 1,
+    alignItems:'center',
+  },
+
+});
