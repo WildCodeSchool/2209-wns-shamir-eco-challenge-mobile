@@ -3,4 +3,5 @@ export default interface Player {
   name: string;
   image: string;
   mail: string;
+  color: string;
 }
