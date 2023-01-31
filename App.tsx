@@ -27,7 +27,7 @@ export type RootStackParamList = {
   //Undefined when no params needed
   TabNavigator: undefined;
   Guests: undefined;
-  Accueil: undefined;
+  Home: undefined;
   Register: undefined;
   HomeMember: undefined;
   Challenges: undefined;
@@ -54,15 +54,15 @@ export default function App() {
           component={TabNavigator}
           options={{ headerShown: false }}
         />
-        <Stack.Screen name="Visiteurs" component={Guests} />
-        <Stack.Screen name="Accueil" component={Home} />
-        <Stack.Screen name="Auth" component={Register} />
-        <Stack.Screen name="Accueil Membre" component={HomeMember} />
+        <Stack.Screen name="Guests" component={Guests} />
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Register" component={Register} />
+        <Stack.Screen name="HomeMember" component={HomeMember} />
         <Stack.Screen name="Challenges" component={Challenges} />
         <Stack.Screen name="ChallengeDetails" component={ChallengeDetails} />
-        <Stack.Screen name="Créer un challenge" component={CreateChallenge} />
-        <Stack.Screen name="Profil" component={Profile} />
-        <Stack.Screen name="Amis" component={Friends} />
+        <Stack.Screen name="CreateChallenge" component={CreateChallenge} />
+        <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="Friends" component={Friends} />
         <Stack.Screen name="Contact" component={Contact} />
       </Stack.Navigator>
     </NavigationContainer>
