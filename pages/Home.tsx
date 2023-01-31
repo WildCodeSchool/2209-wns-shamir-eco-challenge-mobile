@@ -1,5 +1,6 @@
 import * as React from "react";
-import {Text, View} from "react-native";
+import {Text, View, Button} from "react-native";
+import ContactButton from "../components/ContactButton";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
         pour vous informer et sensibiliser sur votre impact énergétique au
         quotidien !
       </Text>
+      <ContactButton />
     </View>
   );
 }
