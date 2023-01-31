@@ -1,12 +1,14 @@
 import React, {useState} from "react";
-import { Text, View, StyleSheet, TextInput, Image, ScrollView, Alert, Modal, Pressable } from "react-native";
+import { Text, View, StyleSheet, TextInput, Image, ScrollView, Alert, Modal, Pressable } from "react-native"
 import Ionicons from "@expo/vector-icons/Ionicons";
+
 
 export default function Home() {
   const [modalVisible, setModalVisible] = useState(false);
   return (
     <ScrollView>
       <View style={styles.container}>
+
         <Image
           style={styles.logo}
           source={require('../assets/logo.png')}
@@ -55,6 +57,7 @@ export default function Home() {
                     placeholder="ton email"
                   />
 
+
                   <Text style={styles.loginText}><Ionicons name={"leaf-outline"} color="#357452ff" size={20}/> Mot de passe :</Text>
                   <TextInput
                     style={styles.input}
@@ -80,7 +83,8 @@ export default function Home() {
         />
       </View>
     </ScrollView>
-  );
+
+      );
 }
 
 const styles = StyleSheet.create({
