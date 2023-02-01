@@ -1,17 +1,65 @@
 import React, {useState} from "react";
-import { Text, View, StyleSheet, TextInput, Image, ScrollView, Alert, Modal, Pressable } from "react-native"
+import * as SecureStore from "expo-secure-store";
+import { Text, View, StyleSheet, TextInput, Image, ScrollView, Pressable, Modal } from "react-native"
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { gql, useMutation } from "@apollo/client";
+import { useDispatch } from "react-redux";
+import { setToken } from "../../stores/tokenReducer";
 
+export const GET_TOKEN = gql`
+  mutation getToken($email: String!, $password: String!) {
+    getToken(email: $email, password: $password)
+  }
+`;
 
-export default function Home() {
+export const CREATE_USER = gql`
+  mutation createUser($email: String!, $password: String!) {
+    createUser(email: $email, password: $password)
+  }
+`;
+
+export default function Login() {
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const dispatch = useDispatch();
+
+  const [loadToken] = useMutation(GET_TOKEN, {
+    variables: {
+      email: email,
+      password: password,
+    },
+    onCompleted: (data) => {
+      console.log(data.getToken);
+      SecureStore.setItemAsync("token", data.getToken);
+      dispatch(setToken(data.getToken));
+    },
+    onError(error) {
+        console.log(error);
+    }
+  });
+
+  const [newUser] = useMutation(CREATE_USER, {
+    variables: {
+      email: email,
+      password: password,
+    },
+    onCompleted: (data) => {
+      console.log(data.createUser);
+    },
+    onError(error) {
+        console.log(error);
+    }
+  });
+
   const [modalVisible, setModalVisible] = useState(false);
+
   return (
     <ScrollView>
       <View style={styles.container}>
 
         <Image
           style={styles.logo}
-          source={require('../assets/logo.png')}
+          source={require('../../assets/logo.png')}
         />
 
         <Text style={styles.intro}>
@@ -24,18 +72,24 @@ export default function Home() {
         <View style={styles.loginBox}>
           <Text style={styles.loginText}><Ionicons name={"leaf-outline"} color="#357452ff" size={20}/> Identifiant :</Text>
           <TextInput
+            onChange={(e) => setEmail(e.nativeEvent.text)}
             style={styles.input}
             placeholder="ton email"
           />
 
           <Text style={styles.loginText}><Ionicons name={"leaf-outline"} color="#357452ff" size={20}/> Mot de passe :</Text>
           <TextInput
+            secureTextEntry
+            onChange={(e) => setPassword(e.nativeEvent.text)}
             style={styles.input}
             placeholder="ton mot de passe"
           />
         
-        <Pressable style={[styles.button, styles.buttonClose]}>
-            <Text style={styles.textStyle}>SE CONNECTER</Text>
+          <Pressable 
+            style={[styles.button, styles.buttonClose]}
+            onPress={() => loadToken()}
+          >
+              <Text style={styles.buttonText}>SE CONNECTER</Text>
           </Pressable>
         </View>
 
@@ -47,12 +101,12 @@ export default function Home() {
             transparent={true}
             visible={modalVisible}
             onRequestClose={() => {
-              Alert.alert('Modal has been closed.');
               setModalVisible(!modalVisible);
             }}>
               <View style={styles.modalView}>
                 <Text style={styles.loginText}><Ionicons name={"leaf-outline"} color="#357452ff" size={20}/> Identifiant :</Text>
                   <TextInput
+                    onChange={(e) => setEmail(e.nativeEvent.text)}
                     style={styles.input}
                     placeholder="ton email"
                   />
@@ -60,32 +114,39 @@ export default function Home() {
 
                   <Text style={styles.loginText}><Ionicons name={"leaf-outline"} color="#357452ff" size={20}/> Mot de passe :</Text>
                   <TextInput
+                    secureTextEntry
+                    onChange={(e) => setPassword(e.nativeEvent.text)}
                     style={styles.input}
                     placeholder="ton mot de passe"
-                  />
+                    />
                 <Pressable
                   style={[styles.button, styles.buttonClose]}
-                  onPress={() => setModalVisible(!modalVisible)}>
-                  <Text style={styles.textStyle}>S'ENREGISTRER</Text>
+                  onPress={() => {
+                    newUser()
+                    setModalVisible(!modalVisible)
+                    }
+                  }
+                  >
+                  <Text style={styles.buttonText}>S'ENREGISTRER</Text>
                 </Pressable>
               </View>
           </Modal>
           <Pressable
             style={[styles.button, styles.buttonOpen]}
             onPress={() => setModalVisible(true)}>
-            <Text style={styles.textStyle}>CREER UN COMPTE</Text>
+            <Text style={styles.buttonText}>CREER UN COMPTE</Text>
           </Pressable>
         </View>
 
         <Image
-          style={styles.ecofriend1}
-          source={require('../assets/ecofriend2.png')}
+          style={styles.ecofriend2}
+          source={require('../../assets/ecofriend2.png')}
         />
       </View>
     </ScrollView>
 
       );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -100,7 +161,7 @@ const styles = StyleSheet.create({
   },
   intro: {
     fontSize: 16,
-    fontFamily: "open-sans",
+    // fontFamily: "open-sans",
     textAlign: "center",    
   },
   loginBox: {
@@ -114,7 +175,7 @@ const styles = StyleSheet.create({
   },
   loginText: {
     fontSize: 16,
-    fontFamily: "open-sans",
+    // fontFamily: "open-sans",
   },
   registerBox: {
     backgroundColor: "rgba(53, 116, 82, 0.05)",
@@ -128,11 +189,12 @@ const styles = StyleSheet.create({
   registerText: {
     fontSize: 16,
     fontWeight: "bold",
-    fontFamily: "open-sans",
+    // fontFamily: "open-sans",
     marginBottom: 20,
   },
   input: {
     height: 40,
+    width: 250,
     borderRightWidth: 0,
     borderLeftWidth: 0,
     borderTopWidth: 0,
@@ -140,7 +202,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "#357452ff",
     marginBottom: 20,
   },
-  ecofriend1: {
+  ecofriend2: {
     width: 100,
     height: 100,
   },
@@ -171,7 +233,7 @@ const styles = StyleSheet.create({
   buttonClose: {
     backgroundColor: '#357452ff',
   },
-  textStyle: {
+  buttonText: {
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',

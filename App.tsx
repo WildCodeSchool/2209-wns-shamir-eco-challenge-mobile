@@ -1,71 +1,42 @@
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Contact from "./pages/Contact";
-import Friends from "./pages/Friends";
-import Guests from "./pages/Guests";
-import Home from "./pages/Home";
-import HomeMember from "./pages/HomeMember";
-import Profile from "./pages/Profile";
-import Register from "./components/Register";
-import Challenges from "./pages/Challenges/Challenges";
-import ChallengeDetails from "./pages/Challenges/ChallengeDetails";
-import CreateChallenge from "./pages/Challenges/CreateChallenge";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import TabNavigator from "./TabNavigator";
-import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import Constants from "expo-constants";
+import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
+import * as SecureStore from "expo-secure-store";
+import { Provider } from "react-redux";
+import { store } from "./stores";
+import Router from "./screens/Router";
 
 const { manifest } = Constants;
-const cache = new InMemoryCache();
-const uri = `http://${manifest?.debuggerHost?.split(':').shift()}:5000`;
 
-
-const Stack = createNativeStackNavigator<RootStackParamList>();
-
-export type RootStackParamList = {
-  //Undefined when no params needed
-  TabNavigator: undefined;
-  Guests: undefined;
-  Home: undefined;
-  Register: undefined;
-  HomeMember: undefined;
-  Challenges: undefined;
-  ChallengeDetails: { id: number };
-  CreateChallenge: undefined;
-  Profile: undefined;
-  Friends: undefined;
-  Contact: undefined;
-};
-
-// Initialize Apollo Client
-const client = new ApolloClient({
-  cache,
+const uri = `http://${manifest?.debuggerHost?.split(':').shift()}:5000/graphql`;
+const httpLink = createHttpLink({
   uri,
 });
 
+const authLink = setContext(async (_, { headers }) => {
+  const token = await SecureStore.getItemAsync("token");
+  
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
+});
+
+// Initialize Apollo Client
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
+});
+
 export default function App() {
+
   return (
     <ApolloProvider client={client}>
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="TabNavigator"
-          component={TabNavigator}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen name="Guests" component={Guests} />
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Register" component={Register} />
-        <Stack.Screen name="HomeMember" component={HomeMember} />
-        <Stack.Screen name="Challenges" component={Challenges} />
-        <Stack.Screen name="ChallengeDetails" component={ChallengeDetails} />
-        <Stack.Screen name="CreateChallenge" component={CreateChallenge} />
-        <Stack.Screen name="Profile" component={Profile} />
-        <Stack.Screen name="Friends" component={Friends} />
-        <Stack.Screen name="Contact" component={Contact} />
-      </Stack.Navigator>
-    </NavigationContainer>
+      <Provider store={store}>
+        <Router />
+      </Provider>
     </ApolloProvider>
   );
 }
