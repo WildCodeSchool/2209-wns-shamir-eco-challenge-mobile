@@ -41,18 +41,9 @@ export default function ChallengeList({ data }: ChallengeProps) {
               style={styles.image}
             >
               <Text style={styles.title}>{item.name}</Text>
-              {item.startDate <= todayDate ? (
                 <Text style={styles.dateText}>
                   {item.startDate} - {item.endDate}
                 </Text>
-              ) : (
-                ""
-              )}
-              {item.startDate >= todayDate ? (
-                <Text>Ending {item.endDate}</Text>
-              ) : (
-                ""
-              )}
             </ImageBackground>
           </TouchableOpacity>
         )}
