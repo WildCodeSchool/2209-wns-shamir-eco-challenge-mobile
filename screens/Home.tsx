@@ -21,8 +21,7 @@ export default function Home() {
           <Image
           style={styles.ecofriend1}
           source={require('../assets/ecofriend1.png')}
-        />
-          <ContactButton />
+          />
           <Button style={styles.button} onPress={logout}>
             <Text style={styles.buttonText}>SE DECONNECTER</Text>
           </Button>
@@ -35,7 +34,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     flex: 1,
     alignItems: "center",
-    paddingBottom: 20,
+    justifyContent: "center",
   },
   title: {
       fontSize: 20,
@@ -43,15 +42,14 @@ const styles = StyleSheet.create({
   ecofriend1: {
     width: 100,
     height: 100,
-    marginTop: 20,
-    marginBottom: 20,
+    marginTop: 50,
+    marginBottom: 50,
   },
   button: {
     backgroundColor: '#357452ff',
     borderRadius: 20,
     padding: 10,
     elevation: 2,
-    marginTop: 50
   },
   buttonText: {
     color: 'white',

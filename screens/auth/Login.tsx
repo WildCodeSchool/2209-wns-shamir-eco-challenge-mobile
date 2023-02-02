@@ -1,12 +1,13 @@
 import React, {useState} from "react";
 import * as SecureStore from "expo-secure-store";
-import { Text, View, StyleSheet, TextInput, Image, ScrollView, TouchableOpacity, Modal } from "react-native"
+import { Text, View, StyleSheet, TextInput, Image, ScrollView } from "react-native"
 import { Button } from "react-native-paper";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { gql, useMutation } from "@apollo/client";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../stores/tokenReducer";
-
+import { useNavigation } from "@react-navigation/native";
+import ContactButton from "../../components/ContactButton";
 
 export const GET_TOKEN = gql`
   mutation getToken($email: String!, $password: String!) {
@@ -14,16 +15,11 @@ export const GET_TOKEN = gql`
   }
 `;
 
-export const CREATE_USER = gql`
-  mutation createUser($email: String!, $password: String!) {
-    createUser(email: $email, password: $password)
-  }
-`;
-
 export default function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const [loadToken] = useMutation(GET_TOKEN, {
     variables: {
@@ -34,19 +30,6 @@ export default function Login() {
       console.log(data.getToken);
       await SecureStore.setItemAsync("token", data.getToken);
       dispatch(setToken(data.getToken));
-    },
-    onError(error) {
-        console.log(error);
-    }
-  });
-
-  const [newUser] = useMutation(CREATE_USER, {
-    variables: {
-      email: email,
-      password: password,
-    },
-    onCompleted: (data) => {
-      console.log(data.createUser);
     },
     onError(error) {
         console.log(error);
@@ -88,7 +71,7 @@ export default function Login() {
           />
         
           <Button
-            style={[styles.button, styles.buttonClose]}
+            style={styles.button}
             onPress={() => loadToken()}
           >
               <Text style={styles.buttonText}>SE CONNECTER</Text>
@@ -97,57 +80,36 @@ export default function Login() {
 
         <View style={styles.registerBox}>
           <Text style={styles.registerText}>Nouveau challenger ?</Text>
-        
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => {
-              setModalVisible(!modalVisible);
-            }}>
-              <View style={styles.modalView}>
-                <Text style={styles.loginText}><Ionicons name={"leaf-outline"} color="#357452ff" size={20}/> Identifiant :</Text>
-                  <TextInput
-                    onChange={(e) => setEmail(e.nativeEvent.text)}
-                    style={styles.input}
-                    placeholder="ton email"
-                  />
-
-
-                  <Text style={styles.loginText}><Ionicons name={"leaf-outline"} color="#357452ff" size={20}/> Mot de passe :</Text>
-                  <TextInput
-                    secureTextEntry
-                    onChange={(e) => setPassword(e.nativeEvent.text)}
-                    style={styles.input}
-                    placeholder="ton mot de passe"
-                    />
-                <Button
-                  style={[styles.button, styles.buttonClose]}
-                  onPress={() => {
-                    newUser()
-                    setModalVisible(!modalVisible)
-                    }
-                  }
-                  >
-                  <Text style={styles.buttonText}>S'ENREGISTRER</Text>
-                </Button>
-              </View>
-          </Modal>
           <Button
-            style={[styles.button, styles.buttonOpen]}
-            onPress={() => setModalVisible(true)}>
+            style={styles.button}
+            onPress={() =>
+              navigation.navigate("Créer un compte", {
+                screen: "Register",
+              })
+            }
+            >
             <Text style={styles.buttonText}>CREER UN COMPTE</Text>
           </Button>
+        </View>
+        
+        <View style={styles.contactBox}>
+        <Text style={styles.contactText}>
+            Vous souhaitez avoir plus d'informations sur l'application ?
+            Vous rencontrez des problèmes pour vous connecter/vous enregistrer ?
+            Vous voulez nous faire remonter un bug ?
+            N'hésitez pas à nous contacter :
+        </Text>
+        <ContactButton />
         </View>
 
         <Image
           style={styles.ecofriend2}
           source={require('../../assets/ecofriend2.png')}
         />
+        
       </View>
     </ScrollView>
-
-      );
+  );
 };
 
 const styles = StyleSheet.create({
@@ -173,10 +135,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 20,
     marginTop: 30,
-    marginBottom: 20,
   },
   loginText: {
     fontSize: 16,
+    fontWeight: "bold",
     // fontFamily: "open-sans",
   },
   registerBox: {
@@ -185,13 +147,26 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: "center",
     padding: 20,
-    marginTop: 20,
-    marginBottom: 20,
+    marginTop: 30,
   },
   registerText: {
     fontSize: 16,
     fontWeight: "bold",
     // fontFamily: "open-sans",
+    marginBottom: 20,
+  },
+  contactBox: {
+    backgroundColor: "rgba(53, 116, 82, 0.05)",
+    width: 350,
+    borderRadius: 10,
+    alignItems: "center",
+    padding: 20,
+    marginTop: 30,
+    marginBottom: 40,
+  },
+  contactText: {
+    fontSize: 16,
+    textAlign: "center",
     marginBottom: 20,
   },
   input: {
@@ -208,39 +183,15 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
   },
-  modalView: {
-    height: 500,
-    margin: 50,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 10,
-  },
   button: {
+    backgroundColor: "#357452ff",
     borderRadius: 20,
     padding: 10,
     elevation: 2,
   },
-  buttonOpen: {
-    backgroundColor: '#357452ff',
-  },
-  buttonClose: {
-    backgroundColor: '#357452ff',
-  },
   buttonText: {
     color: 'white',
     fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
     textAlign: 'center',
   },
 });

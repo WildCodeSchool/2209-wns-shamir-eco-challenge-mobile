@@ -9,6 +9,7 @@ import Contact from "./Contact";
 import Friends from "./Friends";
 import Guests from "./Guests";
 import Login from "./auth/Login";
+import Register from "./auth/Register";
 import Home from "./Home";
 import Profile from "./Profile";
 import Challenges from "./Challenges/Challenges";
@@ -51,9 +52,14 @@ const Router = () => {
           <Stack.Screen name="CreateChallenge" component={CreateChallenge} />
           <Stack.Screen name="Profile" component={Profile} />
           <Stack.Screen name="Friends" component={Friends} />
-          <Stack.Screen name="Contact" component={Contact} /></>
+          
+          </>
         ) : (
-          <Stack.Screen name="Login" component={Login} />
+          <>
+          <Stack.Screen name="Se connecter" component={Login} />
+          <Stack.Screen name="Créer un compte" component={Register} />
+          <Stack.Screen name="Contact" component={Contact} />
+          </>
         )}
       </Stack.Navigator>
     </NavigationContainer>
