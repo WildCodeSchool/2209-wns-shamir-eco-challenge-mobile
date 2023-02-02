@@ -1,8 +1,10 @@
 import * as React from "react";
 import * as SecureStore from "expo-secure-store";
-import { View, Text, StyleSheet, Pressable, Image } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
+import { Button } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import { setToken } from "../stores/tokenReducer";
+import ContactButton from "../components/ContactButton";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -20,9 +22,10 @@ export default function Home() {
           style={styles.ecofriend1}
           source={require('../assets/ecofriend1.png')}
         />
-          <Pressable style={styles.button} onPress={logout}>
+          <ContactButton />
+          <Button style={styles.button} onPress={logout}>
             <Text style={styles.buttonText}>SE DECONNECTER</Text>
-          </Pressable>
+          </Button>
       </View>
   );
 }
@@ -48,6 +51,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     elevation: 2,
+    marginTop: 50
   },
   buttonText: {
     color: 'white',

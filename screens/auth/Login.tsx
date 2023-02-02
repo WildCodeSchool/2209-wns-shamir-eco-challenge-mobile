@@ -1,10 +1,12 @@
 import React, {useState} from "react";
 import * as SecureStore from "expo-secure-store";
-import { Text, View, StyleSheet, TextInput, Image, ScrollView, Pressable, Modal } from "react-native"
+import { Text, View, StyleSheet, TextInput, Image, ScrollView, TouchableOpacity, Modal } from "react-native"
+import { Button } from "react-native-paper";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { gql, useMutation } from "@apollo/client";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../stores/tokenReducer";
+
 
 export const GET_TOKEN = gql`
   mutation getToken($email: String!, $password: String!) {
@@ -28,9 +30,9 @@ export default function Login() {
       email: email,
       password: password,
     },
-    onCompleted: (data) => {
+    onCompleted: async (data) => {
       console.log(data.getToken);
-      SecureStore.setItemAsync("token", data.getToken);
+      await SecureStore.setItemAsync("token", data.getToken);
       dispatch(setToken(data.getToken));
     },
     onError(error) {
@@ -85,12 +87,12 @@ export default function Login() {
             placeholder="ton mot de passe"
           />
         
-          <Pressable 
+          <Button
             style={[styles.button, styles.buttonClose]}
             onPress={() => loadToken()}
           >
               <Text style={styles.buttonText}>SE CONNECTER</Text>
-          </Pressable>
+          </Button>
         </View>
 
         <View style={styles.registerBox}>
@@ -119,7 +121,7 @@ export default function Login() {
                     style={styles.input}
                     placeholder="ton mot de passe"
                     />
-                <Pressable
+                <Button
                   style={[styles.button, styles.buttonClose]}
                   onPress={() => {
                     newUser()
@@ -128,14 +130,14 @@ export default function Login() {
                   }
                   >
                   <Text style={styles.buttonText}>S'ENREGISTRER</Text>
-                </Pressable>
+                </Button>
               </View>
           </Modal>
-          <Pressable
+          <Button
             style={[styles.button, styles.buttonOpen]}
             onPress={() => setModalVisible(true)}>
             <Text style={styles.buttonText}>CREER UN COMPTE</Text>
-          </Pressable>
+          </Button>
         </View>
 
         <Image
