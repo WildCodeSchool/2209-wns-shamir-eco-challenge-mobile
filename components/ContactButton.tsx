@@ -1,12 +1,13 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { Button } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 
 const ContactButton = () => {
   const navigation = useNavigation();
 
   return (
-    <TouchableOpacity
+    <Button
       style={styles.button}
       onPress={() =>
         navigation.navigate("Contact", {
@@ -14,19 +15,18 @@ const ContactButton = () => {
         })
       }
     >
-      <Text style={styles.buttonText}>Contact</Text>
-    </TouchableOpacity>
+      <Text style={styles.buttonText}>CONTACT</Text>
+    </Button>
     
   );
 };
 
 const styles = StyleSheet.create({
   button: {
-    marginTop:25,
     backgroundColor: "#357452ff",
+    borderRadius: 20,
     padding: 10,
-    borderRadius: 5,
-    width:200,
+    elevation: 2,
   },
   buttonText: {
     color: "white",

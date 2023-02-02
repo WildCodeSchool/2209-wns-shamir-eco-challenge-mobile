@@ -11,7 +11,7 @@ import {
   ImageBackground,
   FlatList,
 } from "react-native";
-import { RootStackParamList } from "../App";
+import { RootStackParamList } from "../screens/Router";
 import ChallengeProps from "../interfaces/ChallengeProps";
 
 export default function ChallengeList({ data }: ChallengeProps) {
