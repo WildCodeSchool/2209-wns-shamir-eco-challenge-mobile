@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {View, Text, Button, TextInput} from "react-native";
+import { View, Text, Button, TextInput } from "react-native";
 
 export default function SignIn() {
   const [username, setUsername] = useState<String>("");
@@ -25,7 +25,7 @@ export default function SignIn() {
 
         <Text>Mot de passe</Text>
         <TextInput value="password" onChange={handlePassword}></TextInput>
-        <Button title="Se connecter"/>
+        <Button title="Se connecter" />
       </form>
     </View>
   );

@@ -1,6 +1,13 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import * as SecureStore from "expo-secure-store";
-import { Text, View, StyleSheet, TextInput, Image, ScrollView } from "react-native"
+import {
+  Text,
+  View,
+  StyleSheet,
+  TextInput,
+  Image,
+  ScrollView,
+} from "react-native";
 import { Button } from "react-native-paper";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { gql, useMutation } from "@apollo/client";
@@ -32,8 +39,8 @@ export default function Login() {
       dispatch(setToken(data.getToken));
     },
     onError(error) {
-        console.log(error);
-    }
+      console.log(error);
+    },
   });
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -41,40 +48,39 @@ export default function Login() {
   return (
     <ScrollView>
       <View style={styles.container}>
-
-        <Image
-          style={styles.logo}
-          source={require('../../assets/logo.png')}
-        />
+        <Image style={styles.logo} source={require("../../assets/logo.png")} />
 
         <Text style={styles.intro}>
-          Envie de lancer un challenge à vos amis ? "Eco-Challenges" vous permet de
-          créer des challenges personnalisés constitués d'éco-gestes à réaliser
-          pour vous informer et vous sensibiliser sur votre impact énergétique au
-          quotidien !
+          Envie de lancer un challenge à vos amis ? "Eco-Challenges" vous permet
+          de créer des challenges personnalisés constitués d'éco-gestes à
+          réaliser pour vous informer et vous sensibiliser sur votre impact
+          énergétique au quotidien !
         </Text>
 
         <View style={styles.loginBox}>
-          <Text style={styles.loginText}><Ionicons name={"leaf-outline"} color="#357452ff" size={20}/> Identifiant :</Text>
+          <Text style={styles.loginText}>
+            <Ionicons name={"leaf-outline"} color="#357452ff" size={20} />{" "}
+            Identifiant :
+          </Text>
           <TextInput
             onChange={(e) => setEmail(e.nativeEvent.text)}
             style={styles.input}
             placeholder="ton email"
           />
 
-          <Text style={styles.loginText}><Ionicons name={"leaf-outline"} color="#357452ff" size={20}/> Mot de passe :</Text>
+          <Text style={styles.loginText}>
+            <Ionicons name={"leaf-outline"} color="#357452ff" size={20} /> Mot
+            de passe :
+          </Text>
           <TextInput
             secureTextEntry
             onChange={(e) => setPassword(e.nativeEvent.text)}
             style={styles.input}
             placeholder="ton mot de passe"
           />
-        
-          <Button
-            style={styles.button}
-            onPress={() => loadToken()}
-          >
-              <Text style={styles.buttonText}>SE CONNECTER</Text>
+
+          <Button style={styles.button} onPress={() => loadToken()}>
+            <Text style={styles.buttonText}>SE CONNECTER</Text>
           </Button>
         </View>
 
@@ -87,30 +93,28 @@ export default function Login() {
                 screen: "Register",
               })
             }
-            >
+          >
             <Text style={styles.buttonText}>CREER UN COMPTE</Text>
           </Button>
         </View>
-        
+
         <View style={styles.contactBox}>
-        <Text style={styles.contactText}>
-            Vous souhaitez avoir plus d'informations sur l'application ?
-            Vous rencontrez des problèmes pour vous connecter/vous enregistrer ?
-            Vous voulez nous faire remonter un bug ?
-            N'hésitez pas à nous contacter :
-        </Text>
-        <ContactButton />
+          <Text style={styles.contactText}>
+            Vous souhaitez avoir plus d'informations sur l'application ? Vous
+            rencontrez des problèmes pour vous connecter/vous enregistrer ? Vous
+            voulez nous faire remonter un bug ? N'hésitez pas à nous contacter :
+          </Text>
+          <ContactButton />
         </View>
 
         <Image
           style={styles.ecofriend2}
-          source={require('../../assets/ecofriend2.png')}
+          source={require("../../assets/ecofriend2.png")}
         />
-        
       </View>
     </ScrollView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -126,7 +130,7 @@ const styles = StyleSheet.create({
   intro: {
     fontSize: 16,
     // fontFamily: "open-sans",
-    textAlign: "center",    
+    textAlign: "center",
   },
   loginBox: {
     backgroundColor: "rgba(53, 116, 82, 0.05)",
@@ -190,8 +194,8 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });

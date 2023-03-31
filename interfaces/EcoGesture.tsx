@@ -1,6 +1,6 @@
 export default interface EcoGesture {
   id: number;
   imgUrl: string;
-  title: string;
+  name: string;
   text: string;
 }
