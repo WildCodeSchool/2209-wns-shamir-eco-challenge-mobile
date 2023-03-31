@@ -41,9 +41,9 @@ export default function ChallengeList({ data }: ChallengeProps) {
               style={styles.image}
             >
               <Text style={styles.title}>{item.name}</Text>
-                <Text style={styles.dateText}>
-                  {item.startDate} - {item.endDate}
-                </Text>
+              <Text style={styles.dateText}>
+                {item.startDate} - {item.endDate}
+              </Text>
             </ImageBackground>
           </TouchableOpacity>
         )}

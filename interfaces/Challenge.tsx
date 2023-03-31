@@ -5,9 +5,9 @@ export default interface Challenge {
   id: number;
   name: string;
   image: string;
-  playersList: Player[];
+  players: Player[];
   startDate: string;
   endDate: string;
-  status: string;
-  ecoGesturesList: EcoGesture[];
+  challengeStatus: string;
+  gestures: EcoGesture[];
 }

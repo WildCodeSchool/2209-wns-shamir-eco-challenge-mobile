@@ -17,48 +17,51 @@ import ChallengeDetails from "./Challenges/ChallengeDetails";
 import CreateChallenge from "./Challenges/CreateChallenge";
 
 export type RootStackParamList = {
-    //Undefined when no params needed
-    TabNavigator: undefined;
-    Guests: undefined;
-    Home: undefined;
-    Register: undefined;
-    Challenges: undefined;
-    ChallengeDetails: { id: number };
-    CreateChallenge: undefined;
-    Profile: undefined;
-    Friends: undefined;
-    Contact: undefined;
-  };
+  //Undefined when no params needed
+  TabNavigator: undefined;
+  Guests: undefined;
+  Home: undefined;
+  Register: undefined;
+  Challenges: undefined;
+  ChallengeDetails: { id: number };
+  CreateChallenge: undefined;
+  Profile: undefined;
+  Friends: undefined;
+  Contact: undefined;
+};
 
 const Stack = createNativeStackNavigator();
 
 const Router = () => {
   const token = useSelector((state: RootState) => state.token.jwt);
-  
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
         {token ? (
           <>
-          <Stack.Screen
+            <Stack.Screen
               name="TabNavigator"
               component={TabNavigator}
-              options={{ headerShown: false }} />
-          <Stack.Screen name="Accueil" component={Home} />
-          <Stack.Screen name="Guests" component={Guests} />
-          <Stack.Screen name="HomeMember" component={Home} />
-          <Stack.Screen name="Challenges" component={Challenges} />
-          <Stack.Screen name="ChallengeDetails" component={ChallengeDetails} />
-          <Stack.Screen name="CreateChallenge" component={CreateChallenge} />
-          <Stack.Screen name="Profile" component={Profile} />
-          <Stack.Screen name="Friends" component={Friends} />
-          
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen name="Accueil" component={Home} />
+            <Stack.Screen name="Guests" component={Guests} />
+            <Stack.Screen name="HomeMember" component={Home} />
+            <Stack.Screen name="Challenges" component={Challenges} />
+            <Stack.Screen
+              name="ChallengeDetails"
+              component={ChallengeDetails}
+            />
+            <Stack.Screen name="CreateChallenge" component={CreateChallenge} />
+            <Stack.Screen name="Profile" component={Profile} />
+            <Stack.Screen name="Friends" component={Friends} />
           </>
         ) : (
           <>
-          <Stack.Screen name="Se connecter" component={Login} />
-          <Stack.Screen name="Créer un compte" component={Register} />
-          <Stack.Screen name="Contact" component={Contact} />
+            <Stack.Screen name="Se connecter" component={Login} />
+            <Stack.Screen name="Créer un compte" component={Register} />
+            <Stack.Screen name="Contact" component={Contact} />
           </>
         )}
       </Stack.Navigator>

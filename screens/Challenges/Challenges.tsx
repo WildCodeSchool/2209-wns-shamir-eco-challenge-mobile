@@ -1,3 +1,4 @@
+import { gql, useQuery } from "@apollo/client";
 import React, { useState } from "react";
 import {
   Text,
@@ -8,21 +9,58 @@ import {
   TouchableOpacity,
 } from "react-native";
 import ChallengeList from "../../components/ChallengeList";
-import { challengesData } from "../../data/dummyData";
+import Challenge from "../../interfaces/Challenge";
 
 export default function Challenges() {
   const [statusSelector, setStatusSelector] = useState<String>("ACTIVE");
 
+  const GET_ALL_CHALLENGES = gql`
+    query getAllChallenges {
+      getAllChallenges {
+        challengeStatus
+        endDate
+        gestures {
+          id
+          name
+          imgUrl
+          text
+        }
+        id
+        image
+        name
+        players {
+          id
+          email
+          hashedPassword
+          role
+          name
+          image
+          color
+        }
+        startDate
+      }
+    }
+  `;
+  const { loading, error, data } = useQuery(GET_ALL_CHALLENGES);
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
+  if (error) {
+    return <Text>Error! {error.message}</Text>;
+  }
+
+  console.log(data.getAllChallenges);
+
   // TODO: Filtrer par user pour n'afficher que les challenges de l'user (Need: Auth & Data Back)
 
-  const activeChallenge = challengesData.filter(
-    (challenge) => challenge.status === "ACTIVE"
+  const activeChallenge: Challenge[] = data.getAllChallenges.filter(
+    (challenge: Challenge) => challenge.challengeStatus === "ACTIVE"
   );
-  const upcomingChallenge = challengesData.filter(
-    (challenge) => challenge.status === "UPCOMING"
+  const upcomingChallenge: Challenge[] = data.getAllChallenges.filter(
+    (challenge: Challenge) => challenge.challengeStatus === "UPCOMING"
   );
-  const endedChallenge = challengesData.filter(
-    (challenge) => challenge.status === "ENDED"
+  const endedChallenge: Challenge[] = data.getAllChallenges.filter(
+    (challenge: Challenge) => challenge.challengeStatus === "ENDED"
   );
 
   return (
@@ -108,8 +146,9 @@ export default function Challenges() {
           )}
         </View>
         <ChallengeList
-          data={challengesData.filter(
-            (challenge) => challenge.status === statusSelector
+          data={data.getAllChallenges.filter(
+            (challenge: Challenge) =>
+              challenge.challengeStatus === statusSelector
           )}
         />
       </View>
